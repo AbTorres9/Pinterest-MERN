@@ -1,5 +1,3 @@
-import { useState } from "react";
-import "./App.css";
 import { Gallery, Leftbar, Topbar } from "./components/index";
 
 function App() {

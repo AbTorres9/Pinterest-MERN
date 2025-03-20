@@ -74,7 +74,7 @@ function Leftbar() {
         href="/"
         className="w-12 h-12 flex items-center justify-center hover:bg-[#f1f1f1] rounded-lg cursor-pointer"
       >
-        <img src="/general/messages.svg" alt="Messages" />
+        <img src="/general/settings.svg" alt="Setting" />
       </a>
     </div>
   );
