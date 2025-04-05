@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
-import { IKImage } from "imagekitio-react";
+import { Image } from "../index.js";
 
 function GalleryItem({ item }) {
+  const optimizedHeight = (372 * item.height) / item.width;
+
   return (
     <div
       className="group flex relative
@@ -16,20 +18,26 @@ function GalleryItem({ item }) {
         className="w-full rounded-2xl object-cover"
       /> */}
 
-      {/* https://ik.imagekit.io/c9kxki09y/pins/pin25.jpeg?updatedAt=1742478499835 */}
-
-      <IKImage
+      {/* <IKImage
         urlEndpoint={import.meta.env.VITE_URL_IMAGEKIT_ENDPOINT}
         path={item.media}
         className="w-full rounded-2xl object-cover"
         transformation={[
           {
             // height: 200,
-            width: 500,
+            width: 372,
           },
         ]}
         loading="lazy"
         lqip={{ active: true, quality: 30 }}
+      /> */}
+
+      <Image
+        path={item.media}
+        alt=""
+        className={"w-full rounded-2xl object-cover"}
+        width={372}
+        height={optimizedHeight}
       />
 
       {/* Overlay */}
@@ -66,7 +74,7 @@ function GalleryItem({ item }) {
         cursor-pointer border-none
         hover:bg-[#f1f1f1]"
         >
-          <img src="/general/share.svg" alt="" />
+          <Image path="/general/share.svg" alt="" />
         </button>
         <button
           className="  w-8 h-8 rounded-full bg-white
@@ -74,7 +82,7 @@ function GalleryItem({ item }) {
         cursor-pointer border-none
         hover:bg-[#f1f1f1]"
         >
-          <img src="/general/share.svg" alt="" />
+          <Image path="/general/more.svg" alt="" />
         </button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Image } from "../index.js";
 
 const UserOption = ({ children }) => (
   <div className="cursor-pointer p-2 rounded-md hover:bg-gray-100 hover:text-gray-500">
@@ -12,13 +13,13 @@ function UserButton() {
 
   return currentUser ? (
     <div className="max-[475px]:hidden flex items-center gap-4 relative">
-      <img
-        src="/general/noAvatar.png"
+      <Image
+        path="/general/noAvatar.png"
         alt=""
         className="w-9 h-9 rounded-full object-cover"
       />
-      <img
-        src="/general/arrow.svg"
+      <Image
+        path="/general/arrow.svg"
         alt=""
         className="w-4 h-4 cursor-pointer"
         onClick={() => {
