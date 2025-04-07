@@ -33,7 +33,7 @@ function GalleryItem({ item }) {
       /> */}
 
       <Image
-        path={item.media}
+        src={item.media}
         alt=""
         className={"w-full rounded-2xl object-cover"}
         width={372}
@@ -43,7 +43,7 @@ function GalleryItem({ item }) {
       {/* Overlay */}
 
       <Link
-        to={"/pin/item.id"}
+        to={"/pin/item._id"}
         className=" hidden group-hover:block
         absolute inset-0 bg-black/30
         rounded-2xl"
