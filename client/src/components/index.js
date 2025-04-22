@@ -6,7 +6,9 @@ import GalleryItem from "./GalleryItem/GalleryItem.jsx";
 import Image from "./Image/Image.jsx";
 import PostInteractions from "./PostInteractions/PostInteractions.jsx";
 import Comments from "./Comments/Comments.jsx";
-import Collections from "./Collections/Collections.jsx";
+import Comment from "./Comments/Comment.jsx";
+import Boards from "./Boards/Boards.jsx";
+import CommentForm from "./Comments/commentForm.jsx";
 
 export {
   Gallery,
@@ -17,5 +19,7 @@ export {
   Image,
   PostInteractions,
   Comments,
-  Collections,
+  Boards,
+  Comment,
+  CommentForm,
 };

@@ -43,7 +43,7 @@ function GalleryItem({ item }) {
       {/* Overlay */}
 
       <Link
-        to={"/pin/item._id"}
+        to={`/pin/${item._id}`}
         className=" hidden group-hover:block
         absolute inset-0 bg-black/30
         rounded-2xl"

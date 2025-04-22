@@ -2,16 +2,13 @@ import React from "react";
 import { GalleryItem } from "../index.js";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 // const fetchPins = async () => {
 //   const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/pins`);
 //   console.log(response, "RES");
 //   return response.data;
 // };
-
-const search = "";
-const userId = "";
-const boardId = "";
 
 const fetchPins = async ({ pageParam, search, userId, boardId }) => {
   const res = await axios.get(
@@ -22,7 +19,7 @@ const fetchPins = async ({ pageParam, search, userId, boardId }) => {
   return res.data;
 };
 
-function Gallery() {
+function Gallery({ search, userId, boardId }) {
   // const { error, data, isPending } = useQuery({
   //   queryKey: ["pins"],
   //   queryFn: fetchPins,
@@ -50,8 +47,15 @@ function Gallery() {
 
   return (
     <>
-      <div
-        className="grid grid-cols-7 gap-4 auto-rows-[10px]
+      <InfiniteScroll
+        dataLength={allPins.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={<h4>Loading more pins</h4>}
+        endMessage={<h3>All Posts Loaded!</h3>}
+      >
+        <div
+          className="grid grid-cols-7 gap-4 auto-rows-[10px]
       2xl:grid-cols-6 
       xl:grid-cols-5 
       lg:grid-cols-4 
@@ -59,11 +63,12 @@ function Gallery() {
       sm:grid-cols-2 
       max-[639px]:grid-cols-1
       "
-      >
-        {allPins?.map((item) => (
-          <GalleryItem key={item._id} item={item} />
-        ))}
-      </div>
+        >
+          {allPins?.map((item) => (
+            <GalleryItem key={item._id} item={item} />
+          ))}
+        </div>
+      </InfiniteScroll>
     </>
   );
 }

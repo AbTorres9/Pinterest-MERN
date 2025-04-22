@@ -1,13 +1,11 @@
 import express from "express";
-import {} from "../controllers/comment.controller.js";
+import { getComments, addComment } from "../controllers/comment.controller.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  return res.json({
-    status: 200,
-    message: "This is working fine",
-  });
-});
+router.get("/:postId", getComments);
+
+router.post("/", verifyToken, addComment);
 
 export default router;

@@ -1,8 +1,22 @@
 import React from "react";
 import { Image, PostInteractions, Comments } from "../components/index.js";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import apiRequest from "../utils/apiRequest.js";
 
 function PostPage() {
+  const { id } = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: ["pin", id],
+    queryFn: () => apiRequest.get(`/pins/${id}`).then((res) => res.data),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data) return "Pin not found!";
+
   return (
     <>
       <div className="flex justify-center gap-8">
@@ -19,7 +33,7 @@ function PostPage() {
            md:flex-col md:max-h-none */}
           <div className="bg-[#c8bcaf]">
             <Image
-              path={"/pins/pin1.jpeg"}
+              src={data.media}
               alt={""}
               width={"736"}
               className="w-full h-full object-contain"
@@ -27,14 +41,17 @@ function PostPage() {
           </div>
           <div className="flex-1 h-full flex flex-col gap-8 p-4 overflow-hidden">
             <PostInteractions />
-            <Link to={"/john"} className="flex items-center gap-2">
+            <Link
+              to={`/${data.user.userName}`}
+              className="flex items-center gap-2"
+            >
               <Image
-                path={"/general/noAvatar.png"}
+                src={data.user.img || "/general/noAvatar.png"}
                 className="w-4 h-4 rounded-full"
               />
-              <span className="text-sm">John Doe</span>
+              <span className="text-sm">{data.user.displayName}</span>
             </Link>
-            <Comments />
+            <Comments id={data._id} />
           </div>
         </div>
       </div>

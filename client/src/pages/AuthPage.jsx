@@ -1,9 +1,36 @@
 import React, { useState } from "react";
 import { Image } from "../components/index.js";
+import apiRequest from "../utils/apiRequest.js";
+import { useNavigate } from "react-router";
+import useAuthStore from "../../src/utils/authStore.js";
 
 function AuthPage() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const { setCurrentUser } = useAuthStore();
+
+  // let {} = useAuthStore();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const res = await apiRequest.post(
+        `/users/auth/${isRegister ? "register" : "login"}`,
+        data
+      );
+      setCurrentUser(res.data);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setError(error.response);
+    }
+  };
 
   return (
     <div className="h-screen w-screen flex justify-center items-center">
@@ -13,7 +40,12 @@ function AuthPage() {
           {isRegister ? "Create your Account" : "Login to your Account"}
         </h1>
         {isRegister ? (
-          <form action="" key="register" className="w-full flex flex-col gap-4">
+          <form
+            action=""
+            onSubmit={handleSubmit}
+            key="register"
+            className="w-full flex flex-col gap-4"
+          >
             <div className="flex flex-col gap-2">
               <label htmlFor="username" className="text-sm">
                 Username
@@ -22,8 +54,8 @@ function AuthPage() {
                 type="text"
                 placeholder="Username"
                 required
-                name="username"
-                id="username"
+                name="userName"
+                id="userName"
                 className="p-4 border-2 border-gray-300 rounded-lg"
               />
             </div>
@@ -83,7 +115,12 @@ function AuthPage() {
             {error && <p className="text-[#e50829]">{error}</p>}
           </form>
         ) : (
-          <form action="" key="login" className="w-full flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit}
+            action=""
+            key="login"
+            className="w-full flex flex-col gap-4"
+          >
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-sm">
                 Email
